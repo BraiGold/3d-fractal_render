@@ -1,5 +1,6 @@
 # cambiar este valor para cambiar la "definicion"
-CANTIDAD_DE_PASOS_TOTALES = 3
+CANTIDAD_DE_PASOS_TOTALES = 5
+COLOR = None
 
 import bpy
 
@@ -31,7 +32,7 @@ def generar_fractal(pasos_totales):
     inicial = [(1,1,-1),(-1,1,1),(-1,-1,-1),(1,-1,1)]
 
     siguiente = inicial
-    for paso in range(1, pasos_totales+1):
+    for paso in range(1, pasos_totales):
         siguiente = avanzar_un_paso(inicial, siguiente, paso)
     
     return siguiente
@@ -54,7 +55,7 @@ def dibujar_fractal(pasos_totales, color=(1,1,1,1) ):
 
 
 blender_borrar_pantalla()
-dibujar_fractal(CANTIDAD_DE_PASOS_TOTALES, color= None)
+dibujar_fractal(CANTIDAD_DE_PASOS_TOTALES, color= COLOR)
 
 # OTRA COSA QUE SE PUEDE HACER:
 #colores = [(0.5,0,1,1), (1,0.5,1,1), (1,1,0.5,1), (1,1,1,1)]
