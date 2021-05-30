@@ -36,33 +36,27 @@ def generar_fractal(pasos_totales):
     
     return siguiente
             
-def blender_dibujar_cubos(coords):
+def blender_dibujar_cubos(coords, color=(1,1,1,1)):
     for coord in coords:
         bpy.ops.mesh.primitive_cube_add(location=coord)
+        if color is not None:
+            cube = bpy.context.active_object
+            material = bpy.data.materials.new('mat_' + cube.name)
+            material.diffuse_color = color#(float(.5),0.0, 1, 1.0)
+            cube.active_material = material
    
 
-def dibujar_fractal():
-    blender_borrar_pantalla()
-    coords = generar_fractal(CANTIDAD_DE_PASOS_TOTALES)    
-    blender_dibujar_cubos(coords)
+def dibujar_fractal(pasos_totales, color=(1,1,1,1) ):
+    coords = generar_fractal(pasos_totales)
+    blender_dibujar_cubos(coords, color)
 
 
 
 
-dibujar_fractal()
+blender_borrar_pantalla()
+dibujar_fractal(CANTIDAD_DE_PASOS_TOTALES, color= None)
 
-##  Algunas notas de como hacer algunas cosas en blender:
-
-#bpy.ops.mesh.primitive_cube_add(location=(0,0,0), name='carlos')
-
-#import inspect
-#inspect.getargspec(bpy.ops.mesh.primitive_cube_add)
-
-
-##bpy.ops.mesh.primitive_cube_add(location=(0,0,0))
-##bpy.context.active_object.name = 'carlos';
-##for i in range(len(bpy.data.objects)):
-##    print(bpy.data.objects[i].name)
-
-
-# borro todo antes de empezar denuevo
+# OTRA COSA QUE SE PUEDE HACER:
+#colores = [(0.5,0,1,1), (1,0.5,1,1), (1,1,0.5,1), (1,1,1,1)]
+#for pasos_totales in range(1,CANTIDAD_DE_PASOS_TOTALES + 1):
+#    dibujar_fractal(pasos_totales, colores[pasos_totales % len(colores)])
