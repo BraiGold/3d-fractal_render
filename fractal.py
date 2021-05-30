@@ -1,5 +1,5 @@
 # cambiar este valor para cambiar la "definicion"
-CANTIDAD_DE_PASOS_TOTALES = 5
+CANTIDAD_DE_PASOS_TOTALES = 4
 COLOR = None
 
 import bpy
@@ -15,6 +15,9 @@ def suma(t1, t2):
         
 def mult(constante, tupla):
     return tuple(constante * t for t in tupla)
+
+def divi(tupla, constante):
+    return tuple(t / constante for t in tupla)
 
 
 def avanzar_un_paso(inicial, anterior, paso):
@@ -37,9 +40,9 @@ def generar_fractal(pasos_totales):
     
     return siguiente
             
-def blender_dibujar_cubos(coords, color=(1,1,1,1)):
+def blender_dibujar_cubos(coords,pasos_totales, color=(1,1,1,1)):
     for coord in coords:
-        bpy.ops.mesh.primitive_cube_add(location=coord)
+        bpy.ops.mesh.primitive_cube_add(location=divi(coord, 2*2**(pasos_totales-1)), scale =divi((1,1,1), 2**(pasos_totales-1)) )
         if color is not None:
             cube = bpy.context.active_object
             material = bpy.data.materials.new('mat_' + cube.name)
@@ -49,7 +52,7 @@ def blender_dibujar_cubos(coords, color=(1,1,1,1)):
 
 def dibujar_fractal(pasos_totales, color=(1,1,1,1) ):
     coords = generar_fractal(pasos_totales)
-    blender_dibujar_cubos(coords, color)
+    blender_dibujar_cubos(coords, pasos_totales, color)
 
 
 
