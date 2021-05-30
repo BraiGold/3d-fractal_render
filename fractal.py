@@ -3,9 +3,10 @@ CANTIDAD_DE_PASOS_TOTALES = 3
 
 import bpy
 
-def blender_borrar_pantalla():
+def blender_borrar_pantalla(excepto=['Camera','Light']):
     for el in bpy.data.objects:
-        bpy.data.objects.remove(el)
+        if el.name not in excepto:
+            bpy.data.objects.remove(el)
 
     
 def suma(t1, t2):
